@@ -19,7 +19,7 @@ final class GetSampleDataFromJsonQuery implements SampleDataQueryInterface
     public function getData(): array
     {
         try {
-            return $this->sampleDataReader->readFromJson();
+            return $this->sampleDataReader->readFromJson('storage/json/sample/sample_data_for_table.json');
         } catch (Throwable $exception) {
             throw new FailedQueryException($exception->getMessage(), $exception->getCode(), $exception);
         }

@@ -3,6 +3,7 @@
 namespace App\Module\Sample\Infrastructure\Reader;
 
 use App\Module\Sample\Domain\DTO\SampleDTO;
+use Symfony\Component\Filesystem\Exception\FileNotFoundException;
 use UnexpectedValueException;
 
 final class SampleDataReader
@@ -14,9 +15,15 @@ final class SampleDataReader
     /**
      * @return SampleDTO[]
      */
-    public function readFromJson(): array
+    public function readFromJson(string $jsonFilePath): array
     {
-        $jsonContent = file_get_contents("{$this->projectDir}/storage/json/sample/sample_data_for_table.json");
+        $fullPath = "{$this->projectDir}/{$jsonFilePath}";
+
+        if (!file_exists($fullPath)) {
+            $this->throwFileNotFound($jsonFilePath);
+        }
+
+        $jsonContent = file_get_contents($fullPath);
         $jsonData = json_decode($jsonContent, true);
 
         if (!is_array($jsonData)) {
@@ -40,8 +47,13 @@ final class SampleDataReader
         );
     }
 
+    private function throwFileNotFound(string $jsonFilePath): void
+    {
+        throw new FileNotFoundException("File $jsonFilePath not found!");
+    }
+
     private function throwUnexpectedJsonData(): void
     {
-        throw new UnexpectedValueException('Sample data is not array');
+        throw new UnexpectedValueException('Sample data is not array!');
     }
 }
