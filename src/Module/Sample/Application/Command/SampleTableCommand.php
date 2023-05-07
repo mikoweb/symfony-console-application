@@ -29,20 +29,21 @@ class SampleTableCommand extends Command
         $io = new SymfonyStyle($input, $output);
 
         try {
-            $table = new Table($output);
-            $table
-                ->setHeaders(['First Name', 'Last Name', 'Age'])
-            ;
-
             $sampleData = $this->getSampleDataFromJsonQuery->getData();
-            foreach ($sampleData as $item) {
-                $table->addRow([$item->firstName, $item->lastName, $item->age]);
-            }
-
-            $table->render();
         } catch (FailedQueryException $exception) {
             return $this->catchCannotLoadSampleData($io);
         }
+
+        $table = new Table($output);
+        $table
+            ->setHeaders(['First Name', 'Last Name', 'Age'])
+        ;
+
+        foreach ($sampleData as $item) {
+            $table->addRow([$item->firstName, $item->lastName, $item->age]);
+        }
+
+        $table->render();
 
         return Command::SUCCESS;
     }
