@@ -13,8 +13,6 @@ final class MusicInfoDataset extends AbstractTypedMap
 
     public function getValueType(): string
     {
-        // TODO should be equivalent to NamedCsvRow
-
         return 'array';
     }
 }
