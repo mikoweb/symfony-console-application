@@ -12,3 +12,7 @@ Go to `src/Module/Sample/Application/Command` directory to show commands source 
 Execute command in the terminal:
 
     php bin/console
+
+## Copyrights
+
+Copyright (c) Rafał Mikołajun 2023.
